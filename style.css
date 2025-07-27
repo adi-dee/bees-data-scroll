@@ -1,0 +1,230 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Newsreader:ital,opsz,wght@0,6..72,200..800;1,6..72,200..800&family=Rubik:ital,wght@0,300..900;1,300..900&display=swap');
+
+body {
+  margin: 20px 40px;
+  font-family: sans-serif;
+  background: #f9f7f4;
+  padding: 1rem;
+}
+
+h1 {
+  font-family: 'DM Serif Display', serif;
+  font-size: 1.5rem;
+  margin-bottom: 0.5rem;
+  color: #333;
+  text-align: center;
+  text-decoration: underline;
+}
+
+h2 {
+  font-family: 'Newsreader', serif;
+  font-size: 1rem;
+  margin-top: 1.5rem;
+  color: #444;
+  text-align: center;
+}
+
+#chart {
+  width: 100%;
+  height: auto;
+  display: block;
+  overflow: visible;
+  padding: 0;
+  margin: 0;
+}
+
+.highlight-hex {
+  fill: yellowgreen;
+  stroke-width: 1.5;
+  stroke: 0;
+  transition: transform 0.3s ease;
+  stroke-opacity: 0;
+  opacity: 0.5;;
+}
+
+
+.highlight-hex:hover {  
+  cursor: pointer;
+  fill: black;
+  stroke: black;
+  stroke-width: 1.5;
+
+}
+
+
+.highlight-hex.compromise {
+  fill: gold;
+  stroke: orange;
+  stroke-width: 1.5;
+}
+
+#tooltip {
+  position: absolute;
+  background: white;
+  padding: 8px;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+  pointer-events: none;
+  font-size: 0.8rem;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+.highlight-hex {
+  stroke: #444;
+  stroke-width: 0.8;
+}
+
+.hidden {
+  display: none;
+}
+
+.info-box {
+    background: #fceecf;
+    padding: 12px;
+    font-size: 0.9rem;
+    min-height: 172px;
+  }
+
+/* Responsive styles */
+
+.layout {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+  gap: 24px;
+  align-items: flex-start;
+  margin-top: 20px;
+}
+
+.right-column {
+  flex: 1 1 280px;
+  min-width: 250px;
+  max-width: 360px;
+  background: #f4f4f4;
+  padding: 16px;
+  border-radius: 6px;
+  font-size: 0.95rem;
+  line-height: 1.5;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+}
+
+.left-column {
+  flex: 2 1 500px;
+  min-width: 300px;
+}
+
+.highlight-hex {
+  pointer-events: all;
+  cursor: pointer;
+}
+
+
+@media screen and (max-width: 768px) {
+
+body {
+  margin: 0;
+  font-family: 'Rubik', sans-serif;
+}
+
+h1{ 
+  font-size: 1.2rem;
+
+}
+
+  .layout {
+    flex-direction: column-reverse;
+  }
+
+  .right-column,
+  .left-column {
+    padding: 0;
+    max-width: 100%;
+    flex: 0 1 auto; /* ✅ don't stretch it */
+  }
+}
+
+.hexagons path {
+  will-change: transform, opacity, fill;
+}
+
+/* shine animation */
+
+.highlight-hex {
+  animation: glint 3s ease-in-out infinite;
+}
+
+@keyframes glint {
+  0%, 100% {
+    stroke-width: 1.5;
+    stroke: white;
+    fill-opacity: 1;
+  }
+  50% {
+    stroke-width: 2.5;
+    stroke: #fffde9;
+    fill-opacity: 1;
+  }
+}
+
+@keyframes shineSweep {
+  0% { transform: translateX(-100%); }
+  50% { transform: translateX(0%); }
+  100% { transform: translateX(100%); }
+}
+
+#shine-sweep {
+  animation: shineSweep 4s ease-in-out infinite;
+}
+
+/* select */
+
+#x-select {
+  font-family: 'Poppins', 'Segoe UI', sans-serif;
+    font-weight: 400;
+    font-size: 0.8rem;
+  color: #fea864;
+  background-color: #fff;
+  border: 2px solid #fdedcf;
+  border-radius: 0; /* sharp corners */
+  padding:8px 0px 8px 40px; /* extra right padding for arrow */
+  cursor: pointer;
+  width: 240px;
+  appearance: none;
+  background-image:
+    linear-gradient(45deg, transparent 50%, #fea864 50%),
+    linear-gradient(135deg, #fea864 50%, transparent 50%);
+  background-position:
+    calc(100% - 20px) calc(1em + 2px),
+    calc(100% - 15px) calc(1em + 2px);
+  background-size: 5px 5px;
+  background-repeat: no-repeat;
+  position: relative;
+  transition: border-color 0.3s ease;
+}
+
+#x-select:focus {
+  outline: none;
+  border-color: #fdedcf;
+}
+
+#x-select {
+  position: relative; /* this alone doesn’t work well for <select>, so better on wrapper */
+}
+
+.select-wrapper {
+  position: relative;
+  display: inline-block; /* so width fits content */
+}
+
+.select-icon {
+  position: absolute;
+  left: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #fea864;
+  pointer-events: none;
+  font-size: 1.2em;
+  z-index: 10;
+}
+
+

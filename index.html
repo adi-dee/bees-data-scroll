@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Figure 4 - Trade-off Graph</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
+  <script src="https://d3js.org/d3.v7.min.js"></script>
+  <script src="https://d3js.org/d3-hexbin.v0.2.min.js"></script>
+</head>
+<body>
+  <h1>Trade-offs and compromises in multifunctional landscapes: simultaneously maintaining high levels of pollinator communities, pollination service, and profit? – a modelling study </h1>
+  <h2>Figure 4 - Trade-off Graph</h2>
+
+
+  <div class="layout">
+    <div class="right-column">
+            <div id="selected-info" class="info-box">
+        <p>Hover or click on a dot to see details here.</p>
+      </div>
+
+      <p>
+        <strong>About this graph:</strong><br/>
+        Efficiency frontier for trade-off between Economic gain (total gross margin €) and Ecological Functions index (mean of three normalized functions: n-Semi-natural grasslands, n-Pollinator community size, and n-Pollination service).
+      </p>
+      <p>
+        Each point represents one of 50,000 simulations. Color shows grassy field margin width. Bar charts show function contributions. Below are maps reflecting landscape features of solution regions (see Table 1).
+      </p>
+    </div>
+    
+    <div class="left-column">
+      <div class="select-wrapper">
+  <select id="x-select">
+    <option value="V1">F1 - Pollinator Community</option>
+    <option value="V2">F2 - Pollination Service</option>
+    <option value="avg_V1_V2">F1 + F2</option>
+    <option value="avg_V1_V3">F1 + F3</option>
+    <option value="avg_V2_V3">F2 + F3</option>
+    <option value="avg_V1_V2_V3">F1 + F2 + F3</option>
+  </select>
+
+<div class="select-wrapper">
+  <label for="color-select">Color by:</label>
+  <select id="color-select">
+    <option value="compromise">Compromise Center (default)</option>
+    <option value="extra_profit">Extra Profit (Pollination)</option>
+    <option value="area_mean">Mean Field Area</option>
+    <option value="edge_out">Edge Width</option>
+    <option value="grassland_cover">Grassland Cover</option>
+    <option value="forest_cover">Forest Cover</option>
+  </select>
+</div>
+</div>
+      <div id="chart">
+
+        
+      </div>
+      <div id="tooltip" class="hidden"></div>
+    </div>
+  </div>
+
+
+
+  <script src="effect.js"></script>
+</body>
+</html>
