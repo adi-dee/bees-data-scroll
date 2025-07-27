@@ -222,7 +222,7 @@ hexGroup.selectAll("path")
   return d3.select(this).attr("data-original-fill");
 });
   }, 5000);
-}, 700); // Delay to wait until first render finishes
+}, 7000); // Delay to wait until first render finishes
 
 
 
