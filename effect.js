@@ -84,24 +84,17 @@ const interpolators = {
 if (currentColorVar === "compromise") {
   color = d3.scaleDiverging(d3.interpolateRgbBasis([
     "#ffb0ed", "#ffffff", "#ffdd52", "#ff633a"
-  ]))
-  .domain([maxDist, (maxDist + minDist) / 2, minDist])
-  .clamp(true);  // keeps values in range
+  ])).domain([maxDist, (maxDist + minDist) / 2, minDist]);
 } else {
-  const extent = d3.extent(data, d => +d[currentColorVar]);
-  const interpolator = interpolators[currentColorVar] || d3.interpolateYlGnBu;
+const extent = d3.extent(data, d => +d[currentColorVar]);
+const interpolator = interpolators[currentColorVar] || d3.interpolateYlGnBu;
 
-  // If extent is invalid (e.g., [undefined, undefined]), use defaults
-  const safeExtent = extent[0] == null || extent[1] == null
-    ? [0, 100]
-    : extent;
+color = d3.scaleSequential()
+  .domain(extent)
+  .interpolator(interpolator)
+  .clamp(true);
 
-  color = d3.scaleSequential()
-    .domain(safeExtent)
-    .interpolator(interpolator)
-    .clamp(true);  // prevents black when value is outside domain
 }
-
 
     // Axes and gridlines
     const xAxis = d3.axisBottom(x).tickSize(-svgHeight + margin.top + margin.bottom);
@@ -157,8 +150,8 @@ hexGroup.selectAll("path")
   return original;
 
 })
-.attr("fill-opacity", 1) // Not 0.85 or dynamic
-.attr("opacity", 1) // Fully visible
+  .attr("fill-opacity", 0.85)
+  .attr("opacity", 0)
 .attr("stroke", d => importantSeeds.has(String(d[0].seed)) ? "#fff" : "white")
 .attr("stroke-width", d => importantSeeds.has(String(d[0].seed)) ? 2 : 0.2)
 .attr("filter", d => importantSeeds.has(String(d[0].seed)) ? "url(#glow)" : null)
@@ -229,7 +222,7 @@ hexGroup.selectAll("path")
   return d3.select(this).attr("data-original-fill");
 });
   }, 5000);
-}, 7000); // Delay to wait until first render finishes
+}, 700); // Delay to wait until first render finishes
 
 
 
