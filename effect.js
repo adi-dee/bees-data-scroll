@@ -136,59 +136,71 @@ color = d3.scaleSequential()
 }
 
     const hexGroup = svg.append("g").attr("class", "hexagons");
-    
-hexGroup.selectAll("path")
-  .data(bins)
-  .join("path")
-  .attr("d", hexbin.hexagon())
-  .attr("transform", d => `translate(${d.x},${d.y})`)
-.attr("fill", function (d) {
-  const original = currentColorVar === "compromise"
-    ? color(distance(d[0]))
-    : color(d[0][currentColorVar]);
-  d3.select(this).attr("data-original-fill", original); // save it
-  return original;
+   const hexPaths = hexGroup
+  .selectAll("path")
+  .data(bins, d => d[0].seed); // key by seed for smooth updates
 
-})
-  .attr("fill-opacity", 0.85)
-  .attr("opacity", 0)
-.attr("stroke", d => importantSeeds.has(String(d[0].seed)) ? "#fff" : "white")
-.attr("stroke-width", d => importantSeeds.has(String(d[0].seed)) ? 2 : 0.2)
-.attr("filter", d => importantSeeds.has(String(d[0].seed)) ? "url(#glow)" : null)
-.attr("fill-opacity", d => importantSeeds.has(String(d[0].seed)) ? 1.0 : 0.85)
-.attr("class", d => importantSeeds.has(String(d[0].seed)) ? "hex-important" : "hex-default")
-  .on("mouseover", function (event, bin) {
-    const d = bin[0];  // Take first point in hexbin
-    d3.select(this)
-      .attr("stroke", "#333")
-      .attr("stroke-width", 1.5);
+hexPaths.join(
+  enter => enter.append("path")
+    .attr("d", hexbin.hexagon())
+    .attr("transform", d => `translate(${d.x},${d.y})`)
+    .attr("fill", function (d) {
+      const original = currentColorVar === "compromise"
+        ? color(distance(d[0]))
+        : color(d[0][currentColorVar]);
+      d3.select(this).attr("data-original-fill", original);
+      return original;
+    })
+    .attr("fill-opacity", d => importantSeeds.has(String(d[0].seed)) ? 1.0 : 0.85)
+    .attr("stroke", d => importantSeeds.has(String(d[0].seed)) ? "#fff" : "white")
+    .attr("stroke-width", d => importantSeeds.has(String(d[0].seed)) ? 2 : 0.2)
+    .attr("filter", d => importantSeeds.has(String(d[0].seed)) ? "url(#glow)" : null)
+    .attr("class", d => importantSeeds.has(String(d[0].seed)) ? "hex-important" : "hex-default")
+    .attr("opacity", 0)
+    .on("mouseover", function (event, bin) {
+      const d = bin[0];
+      d3.select(this).attr("stroke", "#333").attr("stroke-width", 1.5);
+      tooltip.classed("hidden", false).html(`
+        <strong>Seed:</strong> ${d.seed}<br/>
+        <strong>${currentX}:</strong> ${d[currentX]?.toFixed(3)}<br/>
+        <strong>Gross Margin:</strong> €${d.total_gros_margin?.toLocaleString()}<br/>
+        <hr style="border-top: 2px solid #fad2f0;">
+        <strong>Edge (m):</strong> ${d.edge_out}<br/>
+        <strong>Forest Cover:</strong> ${d.forest_cover.toFixed(0)}%<br/>
+        <strong>Grassland Cover:</strong> ${d.grassland_cover.toFixed(0)}%<br/>
+        <strong>Arable Cover:</strong> ${d.arable_cover.toFixed(0)}%<br/>
+        <strong>Mean Field Area:</strong> ${d.area_mean?.toFixed(2)} ha
+      `)
+      .style("left", event.pageX + 10 + "px")
+      .style("top", event.pageY - 28 + "px");
+      infoBox.html(tooltip.html());
+    })
+    .on("mouseout", function () {
+      d3.select(this).attr("stroke", "none");
+      tooltip.classed("hidden", true);
+    })
+    .transition()
+    .delay((d, i) => i * 1) // fast stagger
+    .duration(250)
+    .attr("opacity", 1),
 
-    tooltip.classed("hidden", false).html(`
-      <strong>Seed:</strong> ${d.seed}<br/>
-      <strong>${currentX}:</strong> ${d[currentX]?.toFixed(3)}<br/>
-      <strong>Gross Margin:</strong> €${d.total_gros_margin?.toLocaleString()}<br/>
-      <hr style="border-top: 2px solid #fad2f0;">
-      <strong>Edge (m):</strong> ${d.edge_out}<br/>
-      <strong>Forest Cover:</strong> ${d.forest_cover.toFixed(0)}%<br/>
-<strong>Grassland Cover:</strong> ${d.grassland_cover.toFixed(0)}%<br/>
-<strong>Arable Cover:</strong> ${d.arable_cover.toFixed(0)}%<br/>
-      <strong>Mean Field Area:</strong> ${d.area_mean?.toFixed(2)} ha
-    `)
-    .style("left", event.pageX + 10 + "px")
-    .style("top", event.pageY - 28 + "px");
+  update => update.transition()
+    .duration(300)
+    .attr("transform", d => `translate(${d.x},${d.y})`)
+    .attr("fill", function (d) {
+      const original = currentColorVar === "compromise"
+        ? color(distance(d[0]))
+        : color(d[0][currentColorVar]);
+      return original;
+    })
+    .attr("opacity", 1),
 
-    infoBox.html(tooltip.html());
-  })
-  .on("mouseout", function () {
-    d3.select(this)
-      .attr("stroke", "none");
+  exit => exit.transition()
+    .duration(150)
+    .attr("opacity", 0)
+    .remove()
+);
 
-    tooltip.classed("hidden", true);
-  })
-  .transition()
-  .delay(() => Math.random() * 300)
-  .duration(500)
-  .attr("opacity", 1);
 
 
     // Dots for all data points
