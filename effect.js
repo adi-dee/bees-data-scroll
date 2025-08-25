@@ -109,6 +109,43 @@ let currentColorVar = "compromise"; // default coloring
     svg.selectAll(".x-axis path, .y-axis path").attr("stroke", "#888");
     svg.selectAll(".x-axis text, .y-axis text").attr("fill", "#666").attr("font-size", "11px");
 
+
+// X Axis Label
+svg.selectAll(".x-axis-label").remove();
+svg.append("text")
+  .attr("class", "x-axis-label")
+  .attr("x", (svgWidth - margin.left - margin.right) / 2 + margin.left)
+  .attr("y", svgHeight - 5)
+  .attr("text-anchor", "middle")
+  .style("font-size", "13px")
+  .style("fill", "#333")
+  .style("font-weight", "500")
+  .text(() => {
+    const labelMap = {
+      V1: "F1 – Pollinator Community",
+      V2: "F2 – Pollination Service",
+      avg_V1_V2: "F1 + F2",
+      avg_V1_V3: "F1 + F3",
+      avg_V2_V3: "F2 + F3",
+      avg_V1_V2_V3: "F1 + F2 + F3"
+    };
+    return labelMap[xVar] || xVar;   // <-- use xVar
+  });
+
+
+
+// Y Axis Label
+svg.selectAll(".y-axis-label").remove(); // remove old label
+svg.append("text")
+  .attr("class", "y-axis-label")
+  .attr("transform", "rotate(-90)")
+  .attr("x", -svgHeight / 2)
+  .attr("y", margin.left - 50) // 👈 bigger padding from axis
+  .attr("text-anchor", "middle")
+  .style("font-size", "12px")
+  .style("fill", "#777777ff")
+  .text("Total Gross Margin (€)");
+
     // remove old hexagon layer (prevents stacking)
     svg.selectAll(".hexagons").remove();
 
@@ -275,8 +312,8 @@ let currentColorVar = "compromise"; // default coloring
 
   // initial render
   function updateGraph(xVar) {
-    console.log("Updating graph with:", xVar);
-    renderChart(xVar);
+  currentX = xVar;        // <-- keep state in sync
+  renderChart(xVar);
   }
 
   // scrollama init (AFTER functions exist)
