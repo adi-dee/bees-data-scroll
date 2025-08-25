@@ -1,4 +1,7 @@
 // effect.js - replace the whole file with this
+// effect.js
+
+// 1. Initialize scrollama
 
 // Configuration
 const svgWidth = 900;
@@ -42,8 +45,8 @@ d3.csv("assets/df_for_adi.csv", d3.autoType).then(data => {
     d.avg_V1_V2_V3 = (d.V1 + d.V2 + d.V3) / 3;
   });
 
-  let currentX = document.getElementById("x-select").value;
-  let currentColorVar = document.getElementById("color-select").value;
+let currentX = "V1";              // default x-axis variable
+let currentColorVar = "compromise"; // default coloring
 
   // color interpolators for non-compromise choices
   const interpolators = {
@@ -269,18 +272,44 @@ d3.csv("assets/df_for_adi.csv", d3.autoType).then(data => {
 
   } // renderChart end
 
+
   // initial render
+  function updateGraph(xVar) {
+    console.log("Updating graph with:", xVar);
+    renderChart(xVar);
+  }
+
+  // scrollama init (AFTER functions exist)
+  const scroller = scrollama();
+  scroller
+    .setup({
+      step: ".step",
+      offset: 0.6,
+      debug: false
+    })
+    .onStepEnter(response => {
+      const value = response.element.getAttribute("data-value");
+      updateGraph(value);
+      d3.selectAll(".step").classed("active", false);
+      d3.select(response.element).classed("active", true);
+    });
+
+  window.addEventListener("resize", scroller.resize);
+
+  // first render
   renderChart(currentX);
 
   // listeners
-  document.getElementById("x-select").addEventListener("change", e => {
-    currentX = e.target.value;
-    renderChart(currentX);
-  });
-
-  document.getElementById("color-select").addEventListener("change", e => {
-    currentColorVar = e.target.value;
-    renderChart(currentX);
-  });
+ d3.selectAll("#color-buttons button").on("click", function() {
+  currentColorVar = d3.select(this).attr("data-color");
+  
+  // update active style
+  d3.selectAll("#color-buttons button").classed("active", false);
+  d3.select(this).classed("active", true);
+  
+  renderChart(currentX);
+});
 
 }); // d3.csv.then end
+
+
