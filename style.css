@@ -203,6 +203,10 @@ p {
 /* Keep responsiveness */
 @media screen and (max-width: 768px) {
 
+  #tooltip {
+    display: none;
+  }
+
     .header {
       padding: 0.5rem;
     }
