@@ -2,7 +2,8 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Figure 4 - Trade-off Graph</title>
+  <title>Landscapes trade-off Graph</title>
+  <link rel="icon" type="image/x-icon" href="/assets/favicon.webp">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="style.css" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
@@ -14,41 +15,95 @@
   <div class="header">
     
   <h1>
-    Trade-offs and compromises in multifunctional landscapes: simultaneously maintaining high levels of pollinator communities, pollination service, and profit? – a modelling study
+    Trade-offs and compromises in multifunctional landscapes:<br/> simultaneously maintaining high levels of pollinator communities, pollination service, and profit?
   </h1>
-  <h2>Figure 4 - Trade-off Graph</h2>
+  <h2>A modelling study by M.Sc. Eyal Goldstein </h2>
+  
 </div>
 
   <!-- Main 2-column layout -->
   <div class="layout">
     
-    <!-- LEFT: Scroll text -->
-    <div class="left-column" id="scrolly-text">
-      <div class="step" data-value="V1">
-        <p>F1 - Pollinator Community</p>
-      </div>
-      <div class="step" data-value="V2">
-        <p>F2 - Pollination Service</p>
-      </div>
-      <div class="step" data-value="avg_V1_V2">
-        <p>F1 + F2</p>
-      </div>
-      <div class="step" data-value="avg_V1_V3">
-        <p>F1 + F3</p>
-      </div>
-      <div class="step" data-value="avg_V2_V3">
-        <p>F2 + F3</p>
-      </div>
-      <div class="step" data-value="avg_V1_V2_V3">
-        <p>F1 + F2 + F3</p>
-      </div>
-    </div>
+  <!-- LEFT: Scroll text -->
+<div class="left-column" id="scrolly-text">
+
+  <!-- Intro sentence -->
+  <div class="intro">
+    <p>Figure 4 - Trade-off Graph</p>
+    <p>
+      The graph below illustrates trade-offs and synergies between ecological functions 
+      and economic outcomes. Each step highlights a specific function or combination, 
+      explaining what is represented on the X-axis.
+    </p>
+  </div>
+
+  <div class="step" data-value="V1">
+    <p><strong>F1 – Pollinator Community</strong></p>
+    <p>
+      This function reflects the richness and abundance of pollinator species in the 
+      landscape. Higher values indicate landscapes that better sustain diverse 
+      pollinator communities, which are essential for maintaining ecological resilience 
+      and pollination services.
+    </p>
+  </div>
+
+  <div class="step" data-value="V2">
+    <p><strong>F2 – Pollination Service</strong></p>
+    <p>
+      This function captures the actual pollination contribution to crop production. 
+      Higher scores indicate greater effectiveness of pollinators in supporting yields, 
+      showing how ecological management links directly to farm productivity.
+    </p>
+  </div>
+
+  <div class="step" data-value="avg_V1_V2">
+    <p><strong>F1 + F2</strong></p>
+    <p>
+      This combined index balances both biodiversity (pollinator community) and the 
+      service they provide (pollination). It highlights trade-offs where landscapes 
+      may favor one aspect over the other, or synergies where both are enhanced together.
+    </p>
+  </div>
+
+  <div class="step" data-value="avg_V1_V3">
+    <p><strong>F1 + F3</strong></p>
+    <p>
+      Here, pollinator community size (F1) is combined with semi-natural grassland area (F3). 
+      This combination shows the role of landscape structure in sustaining pollinators, 
+      emphasizing how habitat availability and biodiversity interact.
+    </p>
+  </div>
+
+  <div class="step" data-value="avg_V2_V3">
+    <p><strong>F2 + F3</strong></p>
+    <p>
+      This pairing highlights the relationship between pollination service and 
+      semi-natural grassland cover. It shows how maintaining grassland habitats 
+      can indirectly support crop production through improved pollination.
+    </p>
+  </div>
+
+  <div class="step" data-value="avg_V1_V2_V3">
+    <p><strong>F1 + F2 + F3</strong></p>
+    <p>
+      This composite function integrates biodiversity, pollination service, and 
+      semi-natural grasslands simultaneously. It represents multifunctionality, 
+      showing how well landscapes maintain ecological integrity while also 
+      contributing to agricultural production.
+    </p>
+  </div>
+         <p class="name">Visual data by <a href="https://www.linkedin.com/in/adi-aviram/">Adi Aviram</a>, didiaviram@gmail.com
+      </p>
+
+</div>
+
 
     <!-- RIGHT: Sticky chart -->
 <div class="right-column">
   <div class="right-sticky">
     <div id="chart"></div>
 
+    <div class="info-buttons-wrapper">
     <div id="selected-info" class="info-box">
       <p>Hover or click on a dot to see details here.</p>
     </div>
@@ -60,6 +115,7 @@
       <button data-color="edge_out">Edge Width</button>
       <button data-color="grassland_cover">Grassland Cover</button>
       <button data-color="forest_cover">Forest Cover</button>
+    </div>
     </div>
   </div>
 </div>

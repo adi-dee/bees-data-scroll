@@ -118,7 +118,7 @@ svg.append("text")
   .attr("y", svgHeight - 5)
   .attr("text-anchor", "middle")
   .style("font-size", "13px")
-  .style("fill", "#333")
+  .style("fill", "#777777ff")
   .style("font-weight", "500")
   .text(() => {
     const labelMap = {
