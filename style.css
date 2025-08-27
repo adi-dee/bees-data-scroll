@@ -277,6 +277,10 @@ p {
     margin-bottom: 1rem;
   }
 
+    .step.active {
+    background: none;
+  }
+
 
 .info-buttons-wrapper {
     display: flex;
